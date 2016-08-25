@@ -4,24 +4,23 @@ require('normalize.css/normalize.css');
 require('styles/App.css');
 
 import React from 'react';
-//import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom';
 
 //获取图片相关json
 var imageDatas = require('../data/imageData.json');
 
 //利用自执行函数，将图片名信息转成图片URL路径信息
-imageDatas = (function genImageURL(imageDataArr){
-	for(var i = 0;i <imageDataArr.length;i++){
-		var singleImageData = imageDataArr[i];
+imageDatas = (function genImageURL(imageDatasArr) {
+    for (var i = 0, j = imageDatasArr.length; i < j; i++) {
+        var singleImageData = imageDatasArr[i];
 
-		singleImageData.imageURL = require('../images/'+singleImageData.fileName);
+        singleImageData.imageURL = require('../images/' + singleImageData.fileName);
 
-		imageDataArr[i] = singleImageData;
-	}
+        imageDatasArr[i] = singleImageData;
+    }
 
-	return imageDataArr;
+    return imageDatasArr;
 })(imageDatas);
-
 /*
  *	获取区间内的一个随机值
  */
@@ -38,8 +37,6 @@ var ImgFigure = React.createClass({
 		if(this.props.arrange.pos){
 			styleObj = this.props.arrange.pos;
 		}
-
-		
 
 		return (
 			<figure className="img-figure" style={styleObj}>
@@ -89,7 +86,7 @@ var GalleryByReactApp = React.createClass({
 
 			imgsArrangeTopArr = [],
 
-			topImgNum = Math.floor(Math.random() * 2),		//取一个或者不取
+			topImgNum = Math.ceil(Math.random() * 2),		//取一个或者不取
 
 			topImgSpliceIndex = 0,
 
@@ -108,7 +105,7 @@ var GalleryByReactApp = React.createClass({
 				imgsArrangeTopArr[index].pos = {
 					top: getRangeRandom(vPosRangeTopY[0],vPosRangeTopY[1]),
 					left: getRangeRandom(vPosRangeX[0],vPosRangeX[1])
-				}
+				};
 			});
 
 			//布局位于左右两侧的图片
@@ -125,7 +122,7 @@ var GalleryByReactApp = React.createClass({
 				imgsArrangeArr[i].pos = {
 					top: getRangeRandom(hPosRangeY[0],hPosRangeY[1]),
 					left: getRangeRandom(hPosRangeLORX[0],hPosRangeLORX[1])
-				}
+				};
 			}
 
 			if(imgsArrangeTopArr && imgsArrangeTopArr[0]){
@@ -153,20 +150,18 @@ var GalleryByReactApp = React.createClass({
 		};
 	},
 
-	//组件加载以后，为每张图片计算其位置范围
+	//组件加载以后，为每张图片计算其位置的范围
 	componentDidMount : function(){
 
 		//舞台大小
-		var stageDOM = this.refs.stage,
+		var stageDOM = ReactDOM.findDOMNode(this.refs.stage),
 			stageW = stageDOM.scrollWidth,
 			stageH = stageDOM.scrollHeight,
 			halfStageW = Math.ceil(stageW / 2),
-			halfstageH = Math.ceil(stageH / 2);
-
-			alert(stageDOM);
+			halfStageH = Math.ceil(stageH / 2);
 
 		//拿到一个imageFigure的 大小
-		var imgFigureDOM = this.refs.imgFigure0,
+		var imgFigureDOM = ReactDOM.findDOMNode(this.refs.imgFigure0),
 			imgW = imgFigureDOM.scrollWidth,
 			imgH = imgFigureDOM.scrollHeight,
 			halfImgW = Math.ceil(imgW / 2),
@@ -174,9 +169,11 @@ var GalleryByReactApp = React.createClass({
 
 		//计算中心图片的位置点
 		this.Constant.centerPos = {
-			left:halfStageW - halfImgW,
-			top:halfstageH - halfImgH
+			left: halfStageW - halfImgW,
+			top: halfStageH - halfImgH
 		};
+
+
 		//计算左侧、右侧区域图片排布位置的取值范围
 		this.Constant.hPosRange.leftSecX[0] = -halfImgW;
 		this.Constant.hPosRange.leftSecX[1] = halfStageW - halfImgW * 3;
@@ -189,7 +186,7 @@ var GalleryByReactApp = React.createClass({
 
 		//计算上侧区域图片排布位置的取值范围
 		this.Constant.vPosRange.topY[0] = -halfImgH;
-		this.Constant.vPosRange.topY[1] = halfstageH - halfImgH * 3;
+		this.Constant.vPosRange.topY[1] = halfStageH - halfImgH * 3;
 
 		this.Constant.vPosRange.x[0] = halfStageW - imgW;
 		this.Constant.vPosRange.x[1] = halfStageW;
@@ -213,7 +210,7 @@ var GalleryByReactApp = React.createClass({
   			};
   		}
 
-  		imgFigures.push(<ImgFigure data={value} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]}/>);
+  		imgFigures.push(<ImgFigure key={index} data={value} ref={'imgFigure'+index} arrange={this.state.imgsArrangeArr[index]}/>);
   	}.bind(this));
 
     return (
@@ -229,6 +226,5 @@ var GalleryByReactApp = React.createClass({
     );
   }
 });
-
 
 module.exports = GalleryByReactApp;

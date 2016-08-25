@@ -1,9 +1,11 @@
 /* Base Application Styles */
 /* line 2, ../sass/App.scss */
 html, body {
+  max-width:1366px;
   width: 100%;
   height: 100%;
   background-color: #222;
+  margin: 0 auto;
 }
 
 /* line 8, ../sass/App.scss */
@@ -47,7 +49,7 @@ figcaption {
 }
 /* line 41, ../sass/App.scss */
 figcaption .img-title {
-  marks: 20px 0 0 0;
+  margin: 20px 0 0 0;
   color: #a7a0a2;
   font-size: 16px;
 }

@@ -1,38 +1,39 @@
-/* Base Application Styles */
-/* line 2, ../sass/App.scss */
+
+/* line 6, ../sass/App.scss */
 html, body {
-  max-width:1366px;
+  max-width: 1366px;
+  margin: 0 auto;
   width: 100%;
   height: 100%;
   background-color: #222;
-  margin: 0 auto;
 }
 
-/* line 8, ../sass/App.scss */
+/* line 13, ../sass/App.scss */
 .content {
   width: 100%;
   height: 100%;
 }
 
-/*stage -- start*/
-/* line 14, ../sass/App.scss */
+/* stage -- start */
+/* line 19, ../sass/App.scss */
 .stage {
   position: relative;
   width: 100%;
   height: 680px;
 }
 
-/*stage -- end*/
-/*image -- start*/
-/* line 22, ../sass/App.scss */
+/* stage -- end */
+/* image -- start */
+/* line 28, ../sass/App.scss */
 .img-sec {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
   background-color: #ddd;
+  perspective: 1800px;
 }
-/* line 30, ../sass/App.scss */
+/* line 40, ../sass/App.scss */
 .img-figure {
   position: absolute;
   width: 320px;
@@ -41,22 +42,52 @@ html, body {
   padding: 40px;
   background-color: #fff;
   box-sizing: border-box;
+  cursor: pointer;
+  transform-origin: 0 50% 0;
+  transform-style: preserve-3d;
+  transition: transform .6s ease-in-out, left .6s ease-in-out, top .6s ease-in-out;
+}
+/* line 56, ../sass/App.scss */
+.img-figure.is-inverse {
+  transform: translate(320px) rotateY(180deg);
 }
 
-/* line 38, ../sass/App.scss */
+/* line 61, ../sass/App.scss */
 figcaption {
   text-align: center;
 }
-/* line 41, ../sass/App.scss */
+/* line 64, ../sass/App.scss */
 figcaption .img-title {
   margin: 20px 0 0 0;
   color: #a7a0a2;
   font-size: 16px;
 }
+/* line 71, ../sass/App.scss */
+figcaption .img-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 50px 40px;
+  overflow: auto;
+  color: #a7a0a2;
+  font-size: 22px;
+  line-height: 1.25;
+  text-align: left;
+  background-color: #fff;
+  box-sizing: border-box;
+  transform: rotateY(180deg) translateZ(1px);
+  backface-visibility: hidden;
+}
+/* line 92, ../sass/App.scss */
+figcaption .img-back p {
+  margin: 0;
+}
 
-/*image -- end*/
-/*controller -- start*/
-/* line 54, ../sass/App.scss */
+/* image -- end */
+/* controller -- start */
+/* line 103, ../sass/App.scss */
 .controller-nav {
   position: absolute;
   left: 0;
@@ -65,5 +96,39 @@ figcaption .img-title {
   width: 100%;
   text-align: center;
 }
+/* line 114, ../sass/App.scss */
+.controller-unit {
+  display: inline-block;
+  margin: 0 5px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: #aaa;
+  border-radius: 50%;
+  transform: scale(0.5);
+  transition: transform .6s ease-in-out, background-color .3s;
+}
+/* line 130, ../sass/App.scss */
+.controller-unit.is-center {
+  background-color: #888;
+  transform: scale(1);
+}
+/* line 135, ../sass/App.scss */
+.controller-unit.is-center::after {
+  color: #fff;
+  font-family: "icons-turn-arrow";
+  font-size: 80%;
+  line-height: 30px;
+  content: "\e600";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/* line 147, ../sass/App.scss */
+.controller-unit.is-center.is-inverse {
+  background-color: #555;
+  transform: rotateY(180deg);
+}
 
-/*controller -- end*/
+/* controller -- end */
